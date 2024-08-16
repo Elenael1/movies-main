@@ -12,8 +12,10 @@ import RestrictedRoute from "./utils/RestrictedRoute";
 import LogIn from "./pages/LogIn";
 import PrivateRoute from "./utils/PrivateRoute";
 import StartPage from "./pages/StartPage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "./redux/auth/operations";
+import { isLoading } from "./redux/auth/selectors";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const MoviesDetails = lazy(
   () => import("./pages/MoviesDetails")
@@ -25,21 +27,32 @@ const Actors = lazy(() => import("./pages/Actors"));
 
 function App() {
   const dispatch = useDispatch();
+  const loading = useSelector(isLoading);
 
   useEffect(() => {
     dispatch(refreshUser());
   }, []);
 
-  return (
+  return loading ? (
+    <CircularProgress
+      disableShrink
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    />
+  ) : (
     <>
       <Header />
       <Suspense fallback={<h1>ЗАВАНТАЖЕННЯ</h1>}>
         <Routes>
-          <Route path="/start" element={<StartPage />}></Route>
+          <Route path="/startpage" element={<StartPage />}></Route>
           <Route
             path="/signup"
             element={
-              <RestrictedRoute element={<SignUp />} redirectTo="/start" />
+              <RestrictedRoute element={<SignUp />} redirectTo="/startpage" />
             }
           ></Route>
           <Route
