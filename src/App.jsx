@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route, useParams, useNavigate } from "react-router-dom";
 import Search from "./pages/Search";
 import PopularFilms from "./pages/PopularFilms";
 // import NotFound from "./pages/NotFound";
@@ -27,9 +27,11 @@ const Actors = lazy(() => import("./pages/Actors"));
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const loading = useSelector(isLoading);
 
   useEffect(() => {
+    navigate("/login");
     dispatch(refreshUser());
   }, []);
 

@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import ModalWithPortal from "../modal/Modal";
 
 const StartPage = () => {
   return (
-    <p>Hello User</p>
-  )
-}
+    <div>
+      <ModalWithPortal />
+    </div>
+  );
+};
 
-export default StartPage
+export default StartPage;
